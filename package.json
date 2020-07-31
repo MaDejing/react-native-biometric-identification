@@ -1,6 +1,6 @@
 {
   "name": "react-native-biometric-identification",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "React Native authentication with the native Biometrics popup.",
   "scripts": {
     "lint": "node_modules/.bin/eslint .",
