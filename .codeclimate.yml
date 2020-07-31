@@ -1,5 +1,5 @@
 exclude_paths:
-  - "TouchID.xcodeproj"
+  - "ios/BiometricIdentification.xcodeproj"
   - "**/*.h"
   - "**/*.m"
   - "**/*.swift"
