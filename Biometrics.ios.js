@@ -36,13 +36,13 @@ export default {
     const authConfig = Object.assign({}, DEFAULT_CONFIG, config);
 
     return new Promise((resolve, reject) => {
-      NativeBiometrics.authenticate(authReason, authConfig, error => {
+      NativeBiometrics.authenticate(authReason, authConfig, (error, options) => {
         // Return error if rejected
         if (error) {
           return reject(createError(authConfig, error.message));
         }
 
-        resolve(true);
+        resolve(options);
       });
     });
   }
