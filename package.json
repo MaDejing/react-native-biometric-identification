@@ -1,7 +1,7 @@
 {
-  "name": "react-native-touch-id",
-  "version": "4.4.1",
-  "description": "React Native authentication with the native Touch ID popup.",
+  "name": "react-native-biometric-identification",
+  "version": "1.0.0",
+  "description": "React Native authentication with the native Biometrics popup.",
   "scripts": {
     "lint": "node_modules/.bin/eslint .",
     "start": "node_modules/react-native/packager/packager.sh",
@@ -11,7 +11,7 @@
   "types": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/naoufal/react-native-touch-id.git"
+    "url": "https://github.com/MaDejing/react-native-biometric-identification.git"
   },
   "keywords": [
     "react-native",
@@ -23,16 +23,19 @@
     "authentication",
     "auth",
     "authenticate",
-    "mobile"
+    "mobile",
+    "biometric",
+    "biometrics"
   ],
-  "author": "Naoufal Kadhom <naoufalkadhom@gmail.com> (https://github.com/naoufal)",
+  "author": "Dejing Ma <mdj940619@163.com> (https://github.com/MaDejing)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/naoufal/react-native-touch-id/issues"
+    "url": "https://github.com/MaDejing/react-native-biometric-identification/issues"
   },
-  "homepage": "https://github.com/naoufal/react-native-touch-id",
+  "homepage": "https://github.com/MaDejing/react-native-biometric-identification",
   "devDependencies": {
     "eslint": "2.0.0",
     "eslint-plugin-react": "2.7.1"
-  }
+  },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }

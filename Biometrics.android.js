@@ -1,12 +1,12 @@
 import { NativeModules, processColor } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
-import { getError, TouchIDError, TouchIDUnifiedError } from './errors';
-const NativeTouchID = NativeModules.FingerprintAuth;
+import { getError, BiometricsError, BiometricsUnifiedError } from './errors';
+const NativeBiometrics = NativeModules.FingerprintAuth;
 
 export default {
   isSupported(config) {
     return new Promise((resolve, reject) => {
-      NativeTouchID.isSupported(
+      NativeBiometrics.isSupported(
         (error, code) => {
           return reject(createError(config, error, code));
         },
@@ -36,7 +36,7 @@ export default {
     authConfig.imageErrorColor = imageErrorColor;
 
     return new Promise((resolve, reject) => {
-      NativeTouchID.authenticate(
+      NativeBiometrics.authenticate(
         authReason,
         authConfig,
         (error, code) => {
@@ -55,8 +55,8 @@ function createError(config, error, code) {
   const errorCode = androidApiErrorMap[code] || androidModuleErrorMap[code];
 
   if (unifiedErrors) {
-    return new TouchIDUnifiedError(getError(errorCode));
+    return new BiometricsUnifiedError(getError(errorCode));
   }
 
-  return new TouchIDError('Touch ID Error', error, errorCode);
+  return new BiometricsError('Touch ID Error', error, errorCode);
 }

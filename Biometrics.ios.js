@@ -1,22 +1,22 @@
 /**
- * @providesModule TouchID
+ * @providesModule Biometrics
  * @flow
  */
 'use strict';
 
 import { NativeModules } from 'react-native';
-const NativeTouchID = NativeModules.TouchID;
+const NativeBiometrics = NativeModules.Biometrics;
 const { iOSErrors } = require('./data/errors');
-const { getError, TouchIDError, TouchIDUnifiedError } = require('./errors');
+const { getError, BiometricsError, BiometricsUnifiedError } = require('./errors');
 
 /**
- * High-level docs for the TouchID iOS API can be written here.
+ * High-level docs for the Biometrics iOS API can be written here.
  */
 
 export default {
   isSupported(config) {
     return new Promise((resolve, reject) => {
-      NativeTouchID.isSupported(config, (error, biometryType) => {
+      NativeBiometrics.isSupported(config, (error, biometryType) => {
         if (error) {
           return reject(createError(config, error.message));
         }
@@ -36,7 +36,7 @@ export default {
     const authConfig = Object.assign({}, DEFAULT_CONFIG, config);
 
     return new Promise((resolve, reject) => {
-      NativeTouchID.authenticate(authReason, authConfig, error => {
+      NativeBiometrics.authenticate(authReason, authConfig, error => {
         // Return error if rejected
         if (error) {
           return reject(createError(authConfig, error.message));
@@ -52,11 +52,11 @@ function createError(config, error) {
   const { unifiedErrors } = config || {};
 
   if (unifiedErrors) {
-    return new TouchIDUnifiedError(getError(error));
+    return new BiometricsUnifiedError(getError(error));
   }
 
   const details = iOSErrors[error];
   details.name = error;
 
-  return new TouchIDError(error, details);
+  return new BiometricsError(error, details);
 }

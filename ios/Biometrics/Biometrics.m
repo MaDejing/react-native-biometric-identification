@@ -1,8 +1,13 @@
-#import "TouchID.h"
+#import "Biometrics.h"
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
-@implementation TouchID
+@implementation Biometrics
+
+typedef enum {
+  AuthenticationTypeBiometrics,
+  AuthenticationTypePasscode,
+} AuthenticationType;
 
 RCT_EXPORT_MODULE();
 
@@ -66,7 +71,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
-             [self handleAttemptToUseDeviceIDWithSuccess:success error:error callback:callback];
+             [self handleAttemptToUseDeviceIDWithSuccess:success error:error authType:AuthenticationTypeBiometrics callback:callback];
          }];
 
         // Device does not support TouchID but user wishes to use passcode fallback
@@ -76,7 +81,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
-             [self handleAttemptToUseDeviceIDWithSuccess:success error:error callback:callback];
+            [self handleAttemptToUseDeviceIDWithSuccess:success error:error authType:AuthenticationTypePasscode callback:callback];
          }];
     }
     else {
@@ -93,15 +98,28 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     }
 }
 
-- (void)handleAttemptToUseDeviceIDWithSuccess:(BOOL)success error:(NSError *)error callback:(RCTResponseSenderBlock)callback {
+- (void)handleAttemptToUseDeviceIDWithSuccess:(BOOL)success error:(NSError *)error authType:(AuthenticationType)authType callback:(RCTResponseSenderBlock)callback {
+    NSMutableDictionary<NSString *, id> *options = [NSMutableDictionary new];
+    NSString *authTypeStr = @"";
+    switch (authType) {
+        case AuthenticationTypeBiometrics:
+            authTypeStr = @"AuthenticationTypeBiometrics";
+            break;
+        case AuthenticationTypePasscode:
+            authTypeStr = @"AuthenticationTypePasscode";
+            break;
+        default:
+            break;
+    }
+    options[@"authType"] = authTypeStr;
     if (success) { // Authentication Successful
-        callback(@[[NSNull null], @"Authenticated with Touch ID."]);
+        callback(@[[NSNull null], options]);
     } else if (error) { // Authentication Error
         NSString *errorReason = [self getErrorReason:error];
         NSLog(@"Authentication failed: %@", errorReason);
-        callback(@[RCTMakeError(errorReason, nil, nil)]);
+        callback(@[RCTMakeError(errorReason, nil, nil), options]);
     } else { // Authentication Failure
-        callback(@[RCTMakeError(@"LAErrorAuthenticationFailed", nil, nil)]);
+        callback(@[RCTMakeError(@"LAErrorAuthenticationFailed", nil, nil), options]);
     }
 }
 
@@ -133,13 +151,13 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         case LAErrorTouchIDNotAvailable:
             errorReason = @"LAErrorTouchIDNotAvailable";
             break;
+        
+        case LAErrorTouchIDLockout:
+            errorReason = @"LAErrorTouchIDLockout";
+            break;
             
         case LAErrorTouchIDNotEnrolled:
             errorReason = @"LAErrorTouchIDNotEnrolled";
-            break;
-
-        case LAErrorTouchIDLockout:
-            errorReason = @"LAErrorTouchIDLockout";
             break;
             
         default:

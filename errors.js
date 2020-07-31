@@ -1,19 +1,19 @@
 const { codes, errors } = require('./data/errors');
 
-class TouchIDError extends Error {
+class BiometricsError extends Error {
   constructor(name, details, code) {
     super();
-    this.name = name || 'TouchIDError';
-    this.message = details.message || 'Touch ID Error';
+    this.name = name || 'BiometricsError';
+    this.message = details.message || 'Biometrics Error';
     this.details = details || {};
     this.code = code;
   }
 }
 
-class TouchIDUnifiedError extends Error {
+class BiometricsUnifiedError extends Error {
   constructor(error) {
     super();
-    this.name = 'TouchIDError';
+    this.name = 'BiometricsError';
     this.message = error.message;
     this.code = error.code;
   }
@@ -82,6 +82,6 @@ const getError = (code) => {
 
 module.exports = {
   getError,
-  TouchIDError,
-  TouchIDUnifiedError
+  BiometricsError,
+  BiometricsUnifiedError
 };

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13BE3DEE1AC21097009241FE /* TouchID.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* TouchID.m */; };
+		13BE3DEE1AC21097009241FE /* Biometrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* Biometrics.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,9 +23,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libTouchID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchID.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		13BE3DEC1AC21097009241FE /* TouchID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchID.h; sourceTree = "<group>"; };
-		13BE3DED1AC21097009241FE /* TouchID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchID.m; sourceTree = "<group>"; };
+		134814201AA4EA6300B7C361 /* libBiometricIdentification.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBiometricIdentification.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		13BE3DEC1AC21097009241FE /* Biometrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Biometrics.h; sourceTree = "<group>"; };
+		13BE3DED1AC21097009241FE /* Biometrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Biometrics.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libTouchID.a */,
+				134814201AA4EA6300B7C361 /* libBiometricIdentification.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -50,18 +50,26 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				13BE3DEC1AC21097009241FE /* TouchID.h */,
-				13BE3DED1AC21097009241FE /* TouchID.m */,
+				F144B0A224D3D1A700ECD6D2 /* Biometrics */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		F144B0A224D3D1A700ECD6D2 /* Biometrics */ = {
+			isa = PBXGroup;
+			children = (
+				13BE3DEC1AC21097009241FE /* Biometrics.h */,
+				13BE3DED1AC21097009241FE /* Biometrics.m */,
+			);
+			path = Biometrics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* TouchID */ = {
+		58B511DA1A9E6C8500147676 /* BiometricIdentification */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "TouchID" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "BiometricIdentification" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -71,9 +79,9 @@
 			);
 			dependencies = (
 			);
-			name = TouchID;
+			name = BiometricIdentification;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libTouchID.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libBiometricIdentification.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -90,11 +98,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "TouchID" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "BiometricIdentification" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -102,7 +111,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* TouchID */,
+				58B511DA1A9E6C8500147676 /* BiometricIdentification */,
 			);
 		};
 /* End PBXProject section */
@@ -112,7 +121,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13BE3DEE1AC21097009241FE /* TouchID.m in Sources */,
+				13BE3DEE1AC21097009241FE /* Biometrics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +212,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = TouchID;
+				PRODUCT_NAME = BiometricIdentification;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -218,7 +227,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = TouchID;
+				PRODUCT_NAME = BiometricIdentification;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -226,7 +235,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "TouchID" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "BiometricIdentification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -235,7 +244,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "TouchID" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "BiometricIdentification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

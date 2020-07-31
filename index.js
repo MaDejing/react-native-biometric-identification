@@ -1,3 +1,3 @@
-import TouchID from './TouchID';
+import Biometrics from './Biometrics';
 
-export default TouchID;
+export default Biometrics;
