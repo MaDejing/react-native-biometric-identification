@@ -36,6 +36,5 @@
   "devDependencies": {
     "eslint": "2.0.0",
     "eslint-plugin-react": "2.7.1"
-  },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+  }
 }
