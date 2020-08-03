@@ -148,7 +148,7 @@ const errors = {
   }
 };
 
-module.exports = {
+export default {
   codes,
   iOSErrors,
   androidApiErrorMap,
