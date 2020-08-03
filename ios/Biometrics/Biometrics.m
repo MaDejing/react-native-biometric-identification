@@ -6,7 +6,7 @@
 
 typedef enum {
   AuthenticationTypeBiometrics,
-  AuthenticationTypePasscode,
+  AuthenticationTypePassword,
 } AuthenticationType;
 
 RCT_EXPORT_MODULE();
@@ -18,16 +18,16 @@ RCT_EXPORT_METHOD(isSupported: (NSDictionary *)options
     NSError *error;
     
     // Check to see if we have a passcode fallback
-    NSNumber *passcodeFallback = [NSNumber numberWithBool:true];
-    if (RCTNilIfNull([options objectForKey:@"passcodeFallback"]) != nil) {
-        passcodeFallback = [RCTConvert NSNumber:options[@"passcodeFallback"]];
+    NSNumber *passwordFallback = [NSNumber numberWithBool:true];
+    if (RCTNilIfNull([options objectForKey:@"passwordFallback"]) != nil) {
+        passwordFallback = [RCTConvert NSNumber:options[@"passwordFallback"]];
     }
     
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         
         // No error found, proceed
         callback(@[[NSNull null], [self getBiometryType:context]]);
-    } else if ([passcodeFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+    } else if ([passwordFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
         
         // No error
         callback(@[[NSNull null], [self getBiometryType:context]]);
@@ -47,11 +47,40 @@ RCT_EXPORT_METHOD(isSupported: (NSDictionary *)options
     }
 }
 
+RCT_EXPORT_METHOD(getAuthenticateType:(NSDictionary *)options
+                  callback: (RCTResponseSenderBlock)callback)
+{
+    NSNumber *passwordFallback = [NSNumber numberWithBool:false];
+    LAContext *context = [[LAContext alloc] init];
+    NSError *error;
+
+    if (RCTNilIfNull([options objectForKey:@"passwordFallback"]) != nil) {
+        passwordFallback = [RCTConvert NSNumber:options[@"passwordFallback"]];
+    }
+
+    // Device has TouchID
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+        // Attempt Authentification
+        NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypeBiometrics];
+        callback(authTypeStr);
+
+        // Device does not support TouchID but user wishes to use passcode fallback
+    } else if ([passwordFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+        // Attempt Authentification
+        NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypePassword];
+        callback(authTypeStr);
+    }
+    else {
+        NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypeBiometrics];
+        callback(authTypeStr);
+    }
+}
+
 RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                   options:(NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
-    NSNumber *passcodeFallback = [NSNumber numberWithBool:false];
+    NSNumber *passwordFallback = [NSNumber numberWithBool:false];
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
 
@@ -60,8 +89,8 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         context.localizedFallbackTitle = fallbackLabel;
     }
 
-    if (RCTNilIfNull([options objectForKey:@"passcodeFallback"]) != nil) {
-        passcodeFallback = [RCTConvert NSNumber:options[@"passcodeFallback"]];
+    if (RCTNilIfNull([options objectForKey:@"passwordFallback"]) != nil) {
+        passwordFallback = [RCTConvert NSNumber:options[@"passwordFallback"]];
     }
 
     // Device has TouchID
@@ -75,13 +104,13 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
          }];
 
         // Device does not support TouchID but user wishes to use passcode fallback
-    } else if ([passcodeFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+    } else if ([passwordFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
         // Attempt Authentification
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
-            [self handleAttemptToUseDeviceIDWithSuccess:success error:error authType:AuthenticationTypePasscode callback:callback];
+            [self handleAttemptToUseDeviceIDWithSuccess:success error:error authType:AuthenticationTypePassword callback:callback];
          }];
     }
     else {
@@ -100,17 +129,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 
 - (void)handleAttemptToUseDeviceIDWithSuccess:(BOOL)success error:(NSError *)error authType:(AuthenticationType)authType callback:(RCTResponseSenderBlock)callback {
     NSMutableDictionary<NSString *, id> *options = [NSMutableDictionary new];
-    NSString *authTypeStr = @"";
-    switch (authType) {
-        case AuthenticationTypeBiometrics:
-            authTypeStr = @"AuthenticationTypeBiometrics";
-            break;
-        case AuthenticationTypePasscode:
-            authTypeStr = @"AuthenticationTypePasscode";
-            break;
-        default:
-            break;
-    }
+    NSString *authTypeStr = [self getAuthTypeStrWithAuthType:authType];
     options[@"authType"] = authTypeStr;
     if (success) { // Authentication Successful
         callback(@[[NSNull null], options]);
@@ -121,6 +140,21 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     } else { // Authentication Failure
         callback(@[RCTMakeError(@"LAErrorAuthenticationFailed", nil, nil), options]);
     }
+}
+
+- (NSString *)getAuthTypeStrWithAuthType:(AuthenticationType)authType {
+    NSString *authTypeStr = @"";
+    switch (authType) {
+        case AuthenticationTypeBiometrics:
+            authTypeStr = @"AuthenticationTypeBiometrics";
+            break;
+        case AuthenticationTypePassword:
+            authTypeStr = @"AuthenticationTypePassword";
+            break;
+        default:
+            break;
+    }
+    return authTypeStr;
 }
 
 - (NSString *)getErrorReason:(NSError *)error

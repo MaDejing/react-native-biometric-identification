@@ -26,11 +26,19 @@ export default {
     });
   },
 
+  getAuthenticateType(config) {
+    return new Promise((resolve) => {
+      NativeBiometrics.getAuthenticateType(config, (authType) => {
+        resolve(authType);
+      });
+    });
+  },
+
   authenticate(reason, config) {
     const DEFAULT_CONFIG = {
       fallbackLabel: null,
       unifiedErrors: false,
-      passcodeFallback: false
+      passwordFallback: false
     };
     const authReason = reason ? reason : ' ';
     const authConfig = Object.assign({}, DEFAULT_CONFIG, config);

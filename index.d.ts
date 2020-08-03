@@ -13,6 +13,13 @@ declare module 'react-native-biometric-identification' {
        */
       unifiedErrors?: boolean;
     }
+
+    interface GetAuthenticateTypeConfig {
+      /**
+       * **iOS only** - By default set to false. If set to true, will allow use of keypad passcode.
+       */
+      passwordFallback?: boolean;
+    }
   
     /**
      * Authentication config
@@ -49,7 +56,7 @@ declare module 'react-native-biometric-identification' {
       /**
        * **iOS only** - By default set to false. If set to true, will allow use of keypad passcode.
        */
-      passcodeFallback?: boolean;
+      passwordFallback?: boolean;
     }
     /**
      * `isSupported` error code
@@ -96,7 +103,7 @@ declare module 'react-native-biometric-identification' {
 
     export enum AuthenticationType {
       AuthenticationTypeBiometrics = 'AuthenticationTypeBiometrics',
-      AuthenticationTypePasscode = 'AuthenticationTypePasscode',
+      AuthenticationTypePassword = 'AuthenticationTypePassword',
     }
 
     export interface AuthenticateSuccessOptions {
@@ -115,6 +122,11 @@ declare module 'react-native-biometric-identification' {
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`
        */
       isSupported(config?: IsSupportedConfig): Promise<BiometryType>;
+      /**
+       * 
+       * @param config
+       */
+      getAuthenticateType(config?: GetAuthenticateTypeConfig): Promise<AuthenticationType>;
     };
     export default Biometrics;
   }

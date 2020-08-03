@@ -17,6 +17,12 @@ export default {
     });
   },
 
+  getAuthenticateType() {
+    return new Promise((resolve) => {
+      resolve('AuthenticationTypeBiometrics');
+    });
+  },
+
   authenticate(reason, config) {
     var DEFAULT_CONFIG = {
       title: 'Authentication Required',
