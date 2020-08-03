@@ -93,6 +93,15 @@ declare module 'react-native-biometric-identification' {
       code: IsSupportedErrorCode;
       details: string;
     }
+
+    export enum AuthenticationType {
+      AuthenticationTypeBiometrics = 'AuthenticationTypeBiometrics',
+      AuthenticationTypePasscode = 'AuthenticationTypePasscode',
+    }
+
+    export interface AuthenticateSuccessOptions {
+      authType: AuthenticationType;
+    }
   
     const TouchID: {
       /**
@@ -100,7 +109,7 @@ declare module 'react-native-biometric-identification' {
        * @param reason String that provides a clear reason for requesting authentication.
        * @param config Configuration object for more detailed dialog setup
        */
-      authenticate(reason?: string, config?: AuthenticateConfig): Promise<true>;
+      authenticate(reason?: string, config?: AuthenticateConfig): Promise<AuthenticateSuccessOptions>;
       /**
        * 
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`
