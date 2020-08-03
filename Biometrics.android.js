@@ -42,8 +42,10 @@ export default {
         (error, code) => {
           return reject(createError(authConfig, error, code));
         },
-        success => {
-          return resolve(true);
+        options => {
+          return resolve({
+            authType: 'AuthenticationTypeBiometrics',
+          });
         }
       );
     });

@@ -100,10 +100,10 @@ declare module 'react-native-biometric-identification' {
     }
 
     export interface AuthenticateSuccessOptions {
-      authType: AuthenticationType;
+      authType?: AuthenticationType;
     }
   
-    const TouchID: {
+    const Biometrics: {
       /**
        *
        * @param reason String that provides a clear reason for requesting authentication.
@@ -116,6 +116,6 @@ declare module 'react-native-biometric-identification' {
        */
       isSupported(config?: IsSupportedConfig): Promise<BiometryType>;
     };
-    export default TouchID;
+    export default Biometrics;
   }
   
