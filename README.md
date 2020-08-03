@@ -1,67 +1,60 @@
 # React Native Biometrics
 
-forked from [naoufal/react-native-touch-id](https://github.com/naoufal/react-native-touch-id)
+forked from [naoufal/react-native-biometric-identification](https://github.com/MaDejing/react-native-biometric-identification)
 
 React Native Biometrics is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with biometric authentication methods like Face ID and Biometrics on both iOS and Android (experimental).
 
-![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
+![react-native-biometric-identification](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
 #### Breaking changes
 
-Please review all changes in the [Changelog](https://github.com/naoufal/react-native-touch-id/blob/master/CHANGELOG.md)
+Please review all changes in the [Changelog](https://github.com/MaDejing/react-native-biometric-identification/blob/master/CHANGELOG.md)
 
 ## Documentation
 
-- [Install](https://github.com/naoufal/react-native-touch-id#install)
-- [Usage](https://github.com/naoufal/react-native-touch-id#usage)
-- [Example](https://github.com/naoufal/react-native-touch-id#example)
-- [Fallback](https://github.com/naoufal/react-native-touch-id#fallback)
-- [Methods](https://github.com/naoufal/react-native-touch-id#methods)
-- [Errors](https://github.com/naoufal/react-native-touch-id#errors)
-- [License](https://github.com/naoufal/react-native-touch-id#license)
+- [Install](https://github.com/MaDejing/react-native-biometric-identification#install)
+- [Usage](https://github.com/MaDejing/react-native-biometric-identification#usage)
+- [Example](https://github.com/MaDejing/react-native-biometric-identification#example)
+- [Fallback](https://github.com/MaDejing/react-native-biometric-identification#fallback)
+- [Methods](https://github.com/MaDejing/react-native-biometric-identification#methods)
+- [Errors](https://github.com/MaDejing/react-native-biometric-identification#errors)
+- [License](https://github.com/MaDejing/react-native-biometric-identification#license)
 
 ## Install
 
 ```shell
-npm i --save react-native-touch-id
+npm i --save react-native-biometric-identification
 ```
-
-or
-
-```shell
-yarn add react-native-touch-id
-```
-
-## Support
-
-Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README. If it's out of date, we encourage you to submit a pull request!
 
 ## Usage
 
-### Linking the Library
+### >= 0.60
+
+Autolinking will just do the job.
+
+### < 0.60
+
+#### Mostly automatic
+
+`react-native link react-native-biometric-identification`
+
+#### Manual linking
 
 In order to use Biometric Authentication, you must first link the library to your project.
-
-#### Using react-native link
-
-Use the built-in command:
-
-```shell
-react-native link react-native-touch-id
-```
 
 #### Using Cocoapods (iOS only)
 
 On iOS you can also link package by updating your podfile
 
 ```ruby
-pod 'TouchID', :path => "#{node_modules_path}/react-native-touch-id"
+pod 'BiometricIdentification', :path => "#{node_modules_path}/react-native-biometric-identification"
 ```
 
 and then run
 
 ```shell
-pod install
+$ > cd ios
+$ > pod install
 ```
 
 #### Using native linking
@@ -98,20 +91,20 @@ In your `Info.plist`:
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
-var TouchID = require('react-native-touch-id');
+var Biometrics = require('react-native-biometric-identification');
 ```
 
 or
 
 ```js
-import TouchID from 'react-native-touch-id';
+import Biometrics from 'react-native-biometric-identification';
 ```
 
 Requesting Face ID/Touch ID Authentication is as simple as calling:
 
 ```js
-TouchID.authenticate('to demo this react-native component', optionalConfigObject)
-  .then(success => {
+Biometrics.authenticate('to demo this react-native component', optionalConfigObject)
+  .then(successOptions => {
     // Success code
   })
   .catch(error => {
@@ -125,13 +118,13 @@ Using Face ID/Touch ID in your app will usually look like this:
 
 ```js
 import React from "react"
-var TouchID = require('react-native-touch-id');
-//or import TouchID from 'react-native-touch-id'
+var Biometrics = require('react-native-biometric-identification');
+//or import Biometrics from 'react-native-biometric-identification'
 
 class YourComponent extends React.Component {
   _pressHandler() {
-    TouchID.authenticate('to demo this react-native component', optionalConfigObject)
-      .then(success => {
+    Biometrics.authenticate('to demo this react-native component', optionalConfigObject)
+      .then(successOptions => {
         AlertIOS.alert('Authenticated Successfully');
       })
       .catch(error => {
@@ -191,8 +184,8 @@ const optionalConfigObject = {
   passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
 };
 
-TouchID.authenticate('to demo this react-native component', optionalConfigObject)
-  .then(success => {
+Biometrics.authenticate('to demo this react-native component', optionalConfigObject)
+  .then(successOptions => {
     AlertIOS.alert('Authenticated Successfully');
   })
   .catch(error => {
@@ -212,7 +205,7 @@ const optionalConfigObject = {
   passcodeFallback: false // if true is passed, itwill allow isSupported to return an error if the device is not enrolled in touch id/face id etc. Otherwise, it will just tell you what method is supported, even if the user is not enrolled.  (default false)
 }
 
-TouchID.isSupported(optionalConfigObject)
+Biometrics.isSupported(optionalConfigObject)
   .then(biometryType => {
     // Success code
     if (biometryType === 'FaceID') {
@@ -229,7 +222,7 @@ TouchID.isSupported(optionalConfigObject)
 
 ## Errors
 
-There are various reasons why biomentric authentication may not be available or fail. `TouchID.isSupported` and `TouchID.authenticate` will return an error representing the reason.
+There are various reasons why biomentric authentication may not be available or fail. `Biometrics.isSupported` and `Biometrics.authenticate` will return an error representing the reason.
 
 #### iOS Errors
 
