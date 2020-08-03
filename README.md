@@ -1,5 +1,7 @@
 # React Native Biometrics
 
+forked from [naoufal/react-native-touch-id](https://github.com/naoufal/react-native-touch-id)
+
 React Native Biometrics is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with biometric authentication methods like Face ID and Biometrics on both iOS and Android (experimental).
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
@@ -329,7 +331,7 @@ Format:
 
 ## License
 
-Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com/)
+Copyright (c) 2020, Dejing Ma
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
