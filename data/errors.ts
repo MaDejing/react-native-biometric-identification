@@ -1,4 +1,4 @@
-const codes = {
+export const codes = {
   iOSCodes: {
     LAErrorAuthenticationFailed: 'LAErrorAuthenticationFailed',
     LAErrorUserCancel: 'LAErrorUserCancel',
@@ -34,7 +34,7 @@ const codes = {
   }
 };
 
-const iOSErrors = {
+export const iOSErrors = {
   [codes.iOSCodes.LAErrorAuthenticationFailed]: {
     message: 'Authentication was not successful because the user failed to provide valid credentials.'
   },
@@ -67,7 +67,7 @@ const iOSErrors = {
   }
 };
 
-const androidApiErrorMap = {
+export const androidApiErrorMap = {
   1: codes.androidApiCodes.FINGERPRINT_ERROR_HW_UNAVAILABLE,
   2: codes.androidApiCodes.FINGERPRINT_ERROR_UNABLE_TO_PROCESS,
   3: codes.androidApiCodes.FINGERPRINT_ERROR_TIMEOUT,
@@ -80,7 +80,7 @@ const androidApiErrorMap = {
   12: codes.androidApiCodes.FINGERPRINT_ERROR_HW_NOT_PRESENT
 };
 
-const androidModuleErrorMap = {
+export const androidModuleErrorMap = {
   101: codes.androidModuleCodes.NOT_SUPPORTED,
   102: codes.androidModuleCodes.NOT_PRESENT,
   103: codes.androidModuleCodes.NOT_AVAILABLE,
@@ -89,7 +89,7 @@ const androidModuleErrorMap = {
   106: codes.androidModuleCodes.AUTHENTICATION_CANCELED
 };
 
-const errors = {
+export const errors = {
   AUTHENTICATION_FAILED: {
     message: 'Authentication failed',
     code: 'AUTHENTICATION_FAILED'
