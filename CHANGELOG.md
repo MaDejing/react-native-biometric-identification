@@ -1,4 +1,4 @@
-<a name="1.0.0"></a>
-## 1.0.0 (2020-07-31)
-- Transfer iOS auth type(Biometrics OR Passcode) when success
+<a name="1.1.4"></a>
+## 1.1.4 (2020-08-03)
+- Transfer auth type(Biometrics OR Passcode) when success
 
