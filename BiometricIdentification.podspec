@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.authors      = package['author']
   s.homepage     = package['repository']['url']
 
-  s.platform     = :ios, "10.0"
+  s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/MaDejing/react-native-biometric-identification.git" }
 
   s.source_files  = "ios/**/*.{h,m}"
