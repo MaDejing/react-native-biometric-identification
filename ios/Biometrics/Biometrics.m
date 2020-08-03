@@ -62,17 +62,17 @@ RCT_EXPORT_METHOD(getAuthenticateType:(NSDictionary *)options
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         // Attempt Authentification
         NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypeBiometrics];
-        callback(authTypeStr);
+        callback(@[authTypeStr]);
 
         // Device does not support TouchID but user wishes to use passcode fallback
     } else if ([passwordFallback boolValue] && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
         // Attempt Authentification
         NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypePassword];
-        callback(authTypeStr);
+        callback(@[authTypeStr]);
     }
     else {
         NSString *authTypeStr = [self getAuthTypeStrWithAuthType:AuthenticationTypeBiometrics];
-        callback(authTypeStr);
+        callback(@[authTypeStr]);
     }
 }
 
