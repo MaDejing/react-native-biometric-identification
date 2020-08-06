@@ -22,6 +22,13 @@ public class DialogResultHandler implements FingerprintDialog.DialogResultListen
       FingerprintAuthModule.inProgress = false;
       errorCallback.invoke(errorString, errorCode);
     }
+
+    @Override
+    public void onAuthFailed(int errorCode) {
+      FingerprintAuthModule.inProgress = false;
+      errorCallback.invoke("authenticate failed", errorCode);
+    }
+  
     @Override
     public void onCancelled() {
       FingerprintAuthModule.inProgress = false;

@@ -1,7 +1,7 @@
 import { NativeModules, processColor } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
 import { getError, BiometricsError, BiometricsUnifiedError } from './errors';
-const NativeBiometrics = NativeModules.FingerprintAuth;
+const NativeBiometrics = NativeModules.BiometricsAuth;
 
 export default {
   isSupported(config) {
@@ -30,6 +30,7 @@ export default {
       imageErrorColor: '#ff0000',
       sensorDescription: 'Touch sensor',
       sensorErrorDescription: 'Failed',
+      authFailDescription: 'Not recognized. Try again.',
       cancelText: 'Cancel',
       unifiedErrors: false
     };

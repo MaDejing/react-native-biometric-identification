@@ -21,6 +21,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private DialogResultListener dialogCallback;
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
+    private int authFailTimes = 0;
 
     private ImageView mFingerprintImage;
     private TextView mFingerprintSensorDescription;
@@ -34,6 +35,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
     private String errorText = "";
+    private String authFailDescription = "";
 
     @Override
     public void onAttach(Context context) {
@@ -153,6 +155,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         if (config.hasKey("imageErrorColor")) {
             this.imageErrorColor = config.getInt("imageErrorColor");
         }
+
+        if (config.hasKey("authFailDescription")) {
+            this.authFailDescription = config.getString("authFailDescription");
+        }
     }
 
     public interface DialogResultListener {
@@ -160,12 +166,15 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         void onError(String errorString, int errorCode);
 
+        void onAuthFailed(int errorCode);
+
         void onCancelled();
     }
 
     @Override
     public void onAuthenticated() {
         this.isAuthInProgress = false;
+        this.authFailTimes = 0;
         this.dialogCallback.onAuthenticated();
         dismiss();
     }
@@ -175,11 +184,28 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError.setText(errorString);
         this.mFingerprintImage.setColorFilter(this.imageErrorColor);
         this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
+        this.authFailTimes = 0;
+        this.dialogCallback.onError(errorString, errorCode);
+    }
+
+    @Override
+    public void onAuthFailed(int errorCode) {
+        this.mFingerprintError.setText(this.authFailDescription);
+        this.mFingerprintImage.setColorFilter(this.imageErrorColor);
+        this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
+        if (this.authFailTimes < 3) {
+            this.authFailTimes++;
+        } else {
+            this.authFailTimes = 0;
+            this.dialogCallback.onAuthFailed(errorCode);
+            dismiss();
+        }
     }
 
     @Override
     public void onCancelled() {
         this.isAuthInProgress = false;
+        this.authFailTimes = 0;
         this.mFingerprintHandler.endAuth();
         this.dialogCallback.onCancelled();
         dismiss();

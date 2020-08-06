@@ -47,7 +47,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @Override
     public String getName() {
-        return "FingerprintAuth";
+        return "BiometricsAuth";
     }
 
     @ReactMethod
@@ -58,7 +58,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
 
         int result = isFingerprintAuthAvailable();
-        if (result == FingerprintAuthConstants.IS_SUPPORTED) {
+        if (result == FingerprintAuthConstants.IS_SUPPORTED || result == FingerprintAuthConstants.NOT_ENROLLED) {
             // TODO: once this package supports Android's Face Unlock,
             // implement a method to find out which type of biometry
             // (not just fingerprint) is actually supported
