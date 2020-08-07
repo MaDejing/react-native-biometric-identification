@@ -1,7 +1,7 @@
 import { NativeModules, processColor } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
 import { getError, BiometricsError, BiometricsUnifiedError } from './errors';
-const NativeBiometrics = NativeModules.BiometricsAuth;
+const NativeBiometrics = NativeModules.FingerprintAuth;
 
 export default {
   isSupported(config) {

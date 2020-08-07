@@ -186,6 +186,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
         this.authFailTimes = 0;
         this.dialogCallback.onError(errorString, errorCode);
+        dismiss();
     }
 
     @Override
@@ -193,7 +194,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError.setText(this.authFailDescription);
         this.mFingerprintImage.setColorFilter(this.imageErrorColor);
         this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
-        if (this.authFailTimes < 3) {
+        if (this.authFailTimes < 2) {
             this.authFailTimes++;
         } else {
             this.authFailTimes = 0;

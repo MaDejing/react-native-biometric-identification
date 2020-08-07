@@ -47,7 +47,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @Override
     public String getName() {
-        return "BiometricsAuth";
+        return "FingerprintAuth";
     }
 
     @ReactMethod
