@@ -28,8 +28,6 @@ export default {
       title: 'Authentication Required',
       imageColor: '#1306ff',
       imageErrorColor: '#ff0000',
-      sensorDescription: 'Touch sensor',
-      sensorErrorDescription: 'Failed',
       authFailDescription: 'Not recognized. Try again.',
       cancelText: 'Cancel',
       unifiedErrors: false
