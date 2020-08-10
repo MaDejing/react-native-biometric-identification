@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 
 import com.facebook.react.bridge.ReadableMap;
 
@@ -180,6 +182,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintImage.setColorFilter(this.imageErrorColor);
         if (this.authFailTimes < 2) {
             this.authFailTimes++;
+            Animation an = new RotateAnimation(-3, 3, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            an.setDuration(100);
+            an.setRepeatCount(2);
+            an.setRepeatMode(Animation.REVERSE);
+            an.setFillAfter(false);
+
+            this.mFingerprintError.startAnimation(an);
         } else {
             this.authFailTimes = 0;
             this.dialogCallback.onAuthFailed(errorCode);
